@@ -1,0 +1,22 @@
+version: '3'
+services: 
+    web:
+        build: 
+            context: .
+            dockerfile: Dockerfile.dev
+        ports:
+            - "3000:3000"
+        volumes:
+            # Tells that we want to keep modules
+            - /app/node_modules
+            # Tells that we want everything from the current directory to the 'app' dircetory in the container
+            - .:/app
+
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes: 
+            - /app/node_modules
+            - .:/app
+        command: ["npm", "run", "test"]
